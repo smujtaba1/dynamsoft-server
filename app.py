@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from dynamsoft_barcode_reader_bundle import *
 import os
 import logging

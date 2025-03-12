@@ -83,6 +83,7 @@
 
             <div class="response">
                 <h4>Success Response (200 OK)</h4>
+                <p><strong>Note:</strong> The <code>barcodes</code> array can contain multiple barcode objects, each with a <code>type</code> of either <code>PDF417</code>, <code>CODE_128</code>, or <code>QR_CODE</code>.</p>
                 <pre><code>
 {
   "barcodes": [
@@ -119,7 +120,6 @@
 }
                 </code></pre>
 
-                <p><strong>Note:</strong> The <code>barcodes</code> array can contain multiple barcode objects, each with a <code>type</code> of either <code>PDF417</code>, <code>CODE_128</code>, or <code>QR_CODE</code>. The response will include one or more objects in the <code>barcodes</code> array.</p>
 
                 <h4>Error Responses</h4>
                 <h5>400 Bad Request - No File Uploaded</h5>
