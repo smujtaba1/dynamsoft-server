@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        section {
+            padding: 20px;
+        }
+        h2 {
+            color: #007bff;
+        }
+        .route {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .request, .response {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 5px;
+            line-height: 1.6;  /* Increased line height */
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            line-height: 1.6;  /* Increased line height */
+            white-space: pre-wrap; /* Allow line breaks */
+            word-wrap: break-word; /* Handle long words */
+            overflow-x: auto; /* Allow horizontal scrolling if needed */
+        }
+        .highlight {
+            background-color: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>API Documentation</h1>
+    </header>
+    
+    <section>
+        <h2>POST /scan</h2>
+        <div class="route">
+            <h3>Description</h3>
+            <p>This route allows users to scan barcodes from an uploaded file. It returns the scanned barcodes, including the raw and parsed data for PDF417 and other barcodes, if available.</p>
+
+            <h3>Request</h3>
+            <p>The request should include a file containing the barcode image. The endpoint expects a POST request with the file in the body, sent as binary data (application/octet-stream).</p>
+            <div class="request">
+                <h4>Headers</h4>
+                <pre><code>Content-Type: application/octet-stream</code></pre>
+                <h4>Body</h4>
+                <p><code>POST /scan</code> - Raw binary data of the file to scan.</p>
+            </div>
+
+            <h3>Response</h3>
+            <p>The response will be a JSON object that includes the decoded barcode information or an error message.</p>
+
+            <div class="response">
+                <h4>Success Response (200 OK)</h4>
+                <pre><code>
+{
+  "barcodes": [
+    {
+      "type": "PDF417",   // Barcode type can be PDF417, CODE_128, or QR_CODE
+      "text": {
+        "raw": "string",  // The raw barcode data as a string
+        "parsed": {
+          "Birth Date": "string",          // Date of birth (formatted as a string)
+          "Card Revision Date": "string",  // Card revision date (formatted as a string)
+          "City": "string",                // City (string)
+          "Compliance Type": "string",     // Compliance type (string)
+          "Document Discriminator": "string", // Document discriminator (string)
+          "Expiry Date": "string",         // Expiry date (formatted as a string)
+          "Eye Color": "string",           // Eye color (string)
+          "First Name": "string",          // First name (string)
+          "Gender": "string",              // Gender (string)
+          "Height": "string",              // Height (string)
+          "Inventory Control Number": "string", // Inventory control number (string)
+          "Issue Country": "string",       // Issue country (string)
+          "Issue Date": "string",          // Issue date (formatted as a string)
+          "Jurisdiction-specific vehicle class": "string", // Vehicle class (string)
+          "Last Name": "string",           // Last name (string)
+          "License Number": "string",      // License number (string)
+          "Middle Name": "string",         // Middle name (string)
+          "Organ Donor Indicator": "string", // Organ donor indicator (string)
+          "State": "string",               // State (string)
+          "Street": "string",              // Street address (string)
+          "Zip": "string"                  // Zip code (string)
+        }
+      }
+    }
+  ]
+}
+                </code></pre>
+
+                <p><strong>Note:</strong> The <code>barcodes</code> array can contain multiple barcode objects, each with a <code>type</code> of either <code>PDF417</code>, <code>CODE_128</code>, or <code>QR_CODE</code>. The response will include one or more objects in the <code>barcodes</code> array.</p>
+
+                <h4>Error Responses</h4>
+                <h5>400 Bad Request - No File Uploaded</h5>
+                <pre><code>
+{
+  "error": "No file uploaded"
+}
+                </code></pre>
+
+                <h5>400 Bad Request - Error with Barcode Scanning</h5>
+                <pre><code>
+{
+  "error": "Barcode scan failed"
+}
+                </code></pre>
+
+                <h5>404 Not Found - No Barcodes Found</h5>
+                <pre><code>
+{
+  "error": "No barcodes found"
+}
+                </code></pre>
+
+                <h5>422 Unprocessable Entity - No PDF417 Barcode Found</h5>
+                <pre><code>
+{
+  "error": "Scanned but no PDF417"
+}
+                </code></pre>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
